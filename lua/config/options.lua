@@ -25,13 +25,9 @@ vim.keymap.set(
   '"+y',
   { noremap = true, silent = true, desc = "Copy to system clipboard" }
 )
-vim.keymap.set(
-  { "n", "v" },
-  "<C-S-v>",
-  '"+p',
-  { noremap = true, silent = true, desc = "Paste from system clipboard" }
-)
+vim.keymap.set({ "n", "v" }, "<C-S-v>", '"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.expandtab = true
+vim.g.snacks_animate = false

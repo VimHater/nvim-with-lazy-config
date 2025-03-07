@@ -2,7 +2,7 @@ return {
   "saghen/blink.cmp",
   -- optional: provides snippets for the snippet source
   dependencies = "rafamadriz/friendly-snippets",
-  lazy = true,
+  lazy = false,
   -- use a release tag to download pre-built binaries
   version = "*",
   -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
@@ -59,7 +59,7 @@ return {
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
       --default = { 'lsp', 'path', 'snippets', 'buffer' },
-      default = { 'lsp'},
+      default = { 'lsp' , 'buffer'},
     },
 
     -- Blink.cmp uses a Rust fuzzy matcher by default for typo resistance and significantly better performance
@@ -67,7 +67,7 @@ return {
     -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
     --
     -- See the fuzzy documentation for more information
-    fuzzy = { implementation = "prefer_rust" },
+    fuzzy = { implementation = "rust" },
   },
   opts_extend = { "sources.default" },
 }

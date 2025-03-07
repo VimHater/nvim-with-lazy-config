@@ -23,8 +23,14 @@ return {
     opts = {
       servers = {
         clangd = {
-          flags = {
-            debounce_text_changes = 2000,
+          cmd = {
+            "clangd",
+            "--background-index",
+            "--compile-commands-dir=build",
+            "--query-driver=/usr/bin/clang++,/usr/bin/g++",
+          },
+          capabilities = {
+            offsetEncoding = { "utf-16" },
           },
         },
       },

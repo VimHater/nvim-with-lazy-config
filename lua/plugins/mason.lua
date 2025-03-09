@@ -51,6 +51,9 @@ return {
             "--completion-style=detailed",
             "--function-arg-placeholders",
             "--fallback-style=google",
+            "--pch-storage=memory",
+            "--j=8",
+            "--malloc-trim",
           },
           init_options = {
             usePlaceholders = true,

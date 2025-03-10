@@ -41,19 +41,27 @@ return {
             ) or require("lspconfig.util").find_git_ancestor(fname)
           end,
           capabilities = {
-            offsetEncoding = { "utf-16" },
+            offsetEncoding = { "utf-8" },
           },
           cmd = {
             "clangd",
             "--background-index",
-            "--clang-tidy",
+            --"--clang-tidy",
             "--header-insertion=iwyu",
-            "--completion-style=detailed",
-            "--function-arg-placeholders",
-            "--fallback-style=google",
+            --"--completion-style=bundled",
+            -- "--function-arg-placeholders",
+            -- "--fallback-style=google",
             "--pch-storage=memory",
-            "--j=8",
+            --"--j=8", -- Reduced from 8 to prevent memory pressure
             "--malloc-trim",
+            "--limit-results=30", -- Limit completion items for speed
+            "--limit-references=20",
+            "--inlay-hints=false", -- Disable inlay hints for better performance
+            -- "--header-insertion-decorators=false",
+            "--ranking-model=decision_forest", -- Better ranking algorithm
+            -- "--query-driver=/usr/bin/**/clang-*,/bin/clang,/usr/bin/clang", -- Add appropriate paths for your system
+            -- "--log=error", -- Reduce logging overhead
+            -- "--enable-config", -- Enable .clangd config files
           },
           init_options = {
             usePlaceholders = true,
@@ -62,13 +70,14 @@ return {
           },
         },
       },
-      setup = {
-        clangd = function(_, opts)
-          local clangd_ext_opts = LazyVim.opts("clangd_extensions.nvim")
-          require("clangd_extensions").setup(vim.tbl_deep_extend("force", clangd_ext_opts or {}, { server = opts }))
-          return false
-        end,
-      },
+      -- example calling setup directly for each LSP
+      config = function()
+        local capabilities = require("blink.cmp").get_lsp_capabilities()
+        local lspconfig = require("lspconfig")
+
+        lspconfig["lua_ls"].setup({ capabilities = capabilities })
+        lspconfig["clangd"].setup({ capabilities = capabilities })
+      end,
     },
   },
 }
